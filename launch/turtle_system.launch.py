@@ -36,7 +36,7 @@ def generate_launch_description():
     nav2 = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([
             FindPackageShare("turtlebot3_navigation2"), '/launch', '/navigation2.launch.py']),
-            launch_arguments={'use_sim_time': 'True', 'map': '$HOME/turtlebot3_ws/good_map.yaml'}.items()    
+            launch_arguments={'use_sim_time': 'True', 'map': '$HOME/turtlebot3_ws/turtle_launch/good_map.yaml'}.items()    
     )
 
     exploration_timer = launch.actions.TimerAction(
@@ -57,7 +57,6 @@ def generate_launch_description():
             ]
         )
     )
-
 
 
     return LaunchDescription([
