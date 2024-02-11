@@ -1,5 +1,6 @@
 import os
 import launch.actions
+import launch_ros.actions
 from launch import LaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.actions import IncludeLaunchDescription
@@ -12,9 +13,15 @@ from launch.event_handlers import OnShutdown, OnProcessExit
 from ament_index_python.packages import get_package_share_directory
 
 def generate_launch_description():
-    explore = IncludeLaunchDescription(
-            PythonLaunchDescriptionSource([
-            FindPackageShare("turtle_exploration"), '/launch', '/turtle_exploration.launch.py'])   
+    # explore = IncludeLaunchDescription(
+    #         PythonLaunchDescriptionSource([
+    #         FindPackageShare("turtle_exploration"), '/launch', '/turtle_exploration.launch.py'])   
+    # )
+
+    explore = launch_ros.actions.Node(
+        package='turtle_exploration',
+        executable='turtle_exploration',
+        name='turtle_exploration',
     )
 
     simulation = IncludeLaunchDescription(
