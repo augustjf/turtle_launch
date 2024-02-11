@@ -8,7 +8,7 @@ from launch.actions import LogInfo
 from launch_ros.substitutions import FindPackageShare
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.actions import RegisterEventHandler
-from launch.event_handlers import OnShutdown, OnProcessExit
+from launch.event_handlers import OnShutdown, OnProcessExit, OnProcessStart
 
 from ament_index_python.packages import get_package_share_directory
 
@@ -40,10 +40,10 @@ def generate_launch_description():
             launch_arguments={'use_sim_time': 'True'}.items()         
     )
 
-    pose_est = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([
-            FindPackageShare("turtle_pose_estimation"), '/launch', '/turtle_pose_estimation.py'])
-    )
+    # pose_est = IncludeLaunchDescription(
+    #     PythonLaunchDescriptionSource([
+    #         FindPackageShare("turtle_pose_estimation"), '/launch', '/turtle_pose_estimation.py'])
+    # )
 
     # nav2 = IncludeLaunchDescription(
     #     PythonLaunchDescriptionSource([
@@ -65,13 +65,28 @@ def generate_launch_description():
         ]
     )
 
+    navigate_map = launch_ros.actions.Node(
+        package='turtlebot_navigation',
+        executable='route_manager',
+        name='turtlebot_navigation',
+    )
+
+    navstart_timer = launch.actions.TimerAction(
+        period=5.0,
+        actions=[
+            LogInfo(msg="Nav timer Finished"),
+            navigate_map
+        ]
+    )
+
     nav2_event = RegisterEventHandler(
         OnProcessExit(
             target_action=explore,
             on_exit=[
                 LogInfo(msg='Exploration Done'),
                 nav2,
-                pose_est
+                navstart_timer
+                # pose_est
             ]
         )
     )
