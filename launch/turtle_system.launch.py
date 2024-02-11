@@ -58,7 +58,6 @@ def generate_launch_description():
         )
     )
 
-
     return LaunchDescription([
         exploration_timer,
         simulation,
