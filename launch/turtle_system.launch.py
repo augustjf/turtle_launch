@@ -24,15 +24,15 @@ def generate_launch_description():
         name='turtle_exploration',
     )
 
-    # simulation = IncludeLaunchDescription(
-    #     PythonLaunchDescriptionSource([
-    #         FindPackageShare("turtlebot3_gazebo"), '/launch', '/turtlebot3_big_house.launch.py'])   
-    # )
-
     simulation = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([
-            FindPackageShare("turtlebot3_gazebo"), '/launch', '/turtlebot3_world.launch.py'])   
+            FindPackageShare("turtlebot3_gazebo"), '/launch', '/turtlebot3_big_house.launch.py'])   
     )
+
+    # simulation = IncludeLaunchDescription(
+    #     PythonLaunchDescriptionSource([
+    #         FindPackageShare("turtlebot3_gazebo"), '/launch', '/turtlebot3_world.launch.py'])   
+    # )
 
     slam = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([
@@ -45,17 +45,17 @@ def generate_launch_description():
     #         FindPackageShare("turtle_pose_estimation"), '/launch', '/turtle_pose_estimation.py'])
     # )
 
-    # nav2 = IncludeLaunchDescription(
-    #     PythonLaunchDescriptionSource([
-    #         FindPackageShare("turtlebot3_navigation2"), '/launch', '/navigation2.launch.py']),
-    #         launch_arguments={'use_sim_time': 'True', 'map': '$HOME/turtlebot3_ws/turtle_launch/good_map.yaml'}.items()    
-    # )
-
     nav2 = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([
             FindPackageShare("turtlebot3_navigation2"), '/launch', '/navigation2.launch.py']),
-            launch_arguments={'use_sim_time': 'True', 'map': '$HOME/map.yaml'}.items()    
+            launch_arguments={'use_sim_time': 'True', 'map': '$HOME/turtlebot3_ws/turtle_launch/good_map.yaml'}.items()    
     )
+
+    # nav2 = IncludeLaunchDescription(
+    #     PythonLaunchDescriptionSource([
+    #         FindPackageShare("turtlebot3_navigation2"), '/launch', '/navigation2.launch.py']),
+    #         launch_arguments={'use_sim_time': 'True', 'map': '$HOME/map.yaml'}.items()    
+    # )
 
     exploration_timer = launch.actions.TimerAction(
         period=7.0,
